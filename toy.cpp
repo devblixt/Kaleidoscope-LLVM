@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 #include "./include/KaleidoscopeJIT.h"
-
+#include<cstdio>
 using namespace llvm;
 using namespace llvm::orc;
 
@@ -1401,6 +1401,9 @@ extern "C" DLLEXPORT double printd(double X) {
 //===----------------------------------------------------------------------===//
 
 int main() {
+  FILE* outFile = std::fopen("output.txt", "w");
+  std::freopen("output.txt", "w", stdout);
+  
   InitializeNativeTarget();
   InitializeNativeTargetAsmPrinter();
   InitializeNativeTargetAsmParser();
@@ -1446,6 +1449,6 @@ int main() {
 
   // Print out all of the generated code.
   TheModule->print(errs(), nullptr);
-
+std::fclose(outFile);
   return 0;
 }
